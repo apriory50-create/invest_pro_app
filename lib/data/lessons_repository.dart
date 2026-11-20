@@ -14,8 +14,8 @@ class LessonsRepository {
     final seen = <String>{};
     final result = <String>[];
     for (final l in allLessons) {
-      if (seen.add(l.module)) {
-        result.add(l.module);
+      if (seen.add(l.moduleTitle)) {
+        result.add(l.moduleTitle);
       }
     }
     return result;
