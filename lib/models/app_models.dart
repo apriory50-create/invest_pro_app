@@ -1,24 +1,30 @@
 class Lesson {
   final int id;
-  final String module;
+  final int moduleId;
+  final String moduleTitle;
   final String title;
+  final String category;
+  final int readingTimeMinutes;
   final String content;
-  final String example;
-  final String quizQuestion;
-  final List<String> quizOptions;
-  final int correctIndex;
-  final String quizExplanation;
+  final List<String> keyRules;
+  final String question;
+  final List<String> options;
+  final int correctOptionIndex;
+  final String explanation;
 
   const Lesson({
     required this.id,
-    required this.module,
+    required this.moduleId,
+    required this.moduleTitle,
     required this.title,
+    required this.category,
+    required this.readingTimeMinutes,
     required this.content,
-    required this.example,
-    required this.quizQuestion,
-    required this.quizOptions,
-    required this.correctIndex,
-    required this.quizExplanation,
+    required this.keyRules,
+    required this.question,
+    required this.options,
+    required this.correctOptionIndex,
+    required this.explanation,
   });
 }
 
