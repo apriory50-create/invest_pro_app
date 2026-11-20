@@ -27,7 +27,7 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
 
   build-windows:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -41,3 +41,4 @@ jobs:
         with:
           name: invest-pro-windows
           path: build/windows/x64/runner/Release/
+
