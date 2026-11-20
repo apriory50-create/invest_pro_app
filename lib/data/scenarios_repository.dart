@@ -3,6 +3,7 @@ import 'scenarios_part1.dart';
 import 'scenarios_part2.dart';
 import 'scenarios_part3.dart';
 import 'scenarios_part4.dart';
+import 'scenarios_part5.dart';
 
 class ScenariosRepository {
   static List<SimScenario> get allScenarios => [
@@ -10,5 +11,6 @@ class ScenariosRepository {
         ...scenariosPart2,
         ...scenariosPart3,
         ...scenariosPart4,
+        ...scenariosPart5,
       ];
 }
