@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../data/scenarios_part1.dart';
+import '../data/scenarios_repository.dart';
 import '../models/app_models.dart';
 import '../services/storage_service.dart';
 
@@ -103,7 +103,8 @@ class _SimulatorScreenState extends State<SimulatorScreen> {
   }
 
   void _nextMonth() {
-    final sc = scenariosPart1[_scenarioIdx % scenariosPart1.length];
+    final scenarios = ScenariosRepository.allScenarios;
+    final sc = scenarios[_scenarioIdx % scenarios.length];
     final rnd = Random();
     double income = 0;
 
