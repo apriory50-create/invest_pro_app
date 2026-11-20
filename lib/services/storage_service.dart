@@ -92,14 +92,14 @@ class StorageService {
     await p.setBool(_kBeginner, value);
   }
 
-  static Future> getSimState() async {
+  static Future getSimState() async {
     final p = await SharedPreferences.getInstance();
     final raw = p.getString(_kSimState);
     if (raw == null || raw.isEmpty) return {};
     return Map<String, dynamic>.from(jsonDecode(raw));
   }
 
-  static Future<void> saveSimState(Map<String, dynamic> state) async {
+  static Future<void> saveSimState(Map state) async {
     final p = await SharedPreferences.getInstance();
     await p.setString(_kSimState, jsonEncode(state));
   }
