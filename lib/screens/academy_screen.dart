@@ -53,10 +53,11 @@ class _AcademyScreenState extends State<AcademyScreen> {
     final q = _search.trim().toLowerCase();
 
     final filtered = all.where((l) {
-      final matchMod = _selectedModule == 'Все' || l.module == _selectedModule;
+      final matchMod = _selectedModule == 'Все' || l.moduleTitle == _selectedModule;
       final matchQ = q.isEmpty ||
           l.title.toLowerCase().contains(q) ||
-          l.content.toLowerCase().contains(q);
+          l.content.toLowerCase().contains(q) ||
+          l.category.toLowerCase().contains(q);
       return matchMod && matchQ;
     }).toList();
 
@@ -109,7 +110,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
           child: TextField(
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.search),
-              hintText: 'Поиск по урокам...',
+              hintText: 'Поиск по урокам и категориям...',
               isDense: true,
               border: OutlineInputBorder(),
             ),
@@ -149,7 +150,7 @@ class _AcademyScreenState extends State<AcademyScreen> {
                     color: done ? Colors.green : null,
                   ),
                   title: Text(l.title, style: const TextStyle(fontWeight: FontWeight.w600)),
-                  subtitle: Text(l.module, style: const TextStyle(fontSize: 12)),
+                  subtitle: Text('${l.category} • ~${l.readingTimeMinutes} мин', style: const TextStyle(fontSize: 12)),
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () => _openLesson(l),
                 ),
@@ -192,43 +193,50 @@ class _LessonDetailScreenState extends State<_LessonDetailScreen> {
   Widget build(BuildContext context) {
     final l = widget.lesson;
     final answered = _selectedOption != null;
-    final isCorrect = _selectedOption == l.correctIndex;
+    final isCorrect = _selectedOption == l.correctOptionIndex;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.module)),
+      appBar: AppBar(title: Text(l.moduleTitle)),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
           children: [
             Text(l.title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-            Text(l.content, style: const TextStyle(fontSize: 15, height: 1.45)),
+            const SizedBox(height: 6),
+            Text('${l.category} • Время чтения: ~${l.readingTimeMinutes} мин',
+                style: const TextStyle(fontSize: 12, color: Colors.grey)),
             const SizedBox(height: 14),
-            Card(
-              color: Colors.blue.withOpacity(0.08),
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Пример из жизни:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 4),
-                    Text(l.example, style: const TextStyle(fontSize: 14)),
-                  ],
+            Text(l.content.trim(), style: const TextStyle(fontSize: 15, height: 1.5)),
+            const SizedBox(height: 16),
+            if (l.keyRules.isNotEmpty)
+              Card(
+                color: Colors.blue.withOpacity(0.08),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Главные правила урока:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                      const SizedBox(height: 8),
+                      ...l.keyRules.map((r) => Padding(
+                            padding: const EdgeInsets.only(bottom: 6),
+                            child: Text('• $r', style: const TextStyle(fontSize: 14)),
+                          )),
+                    ],
+                  ),
                 ),
               ),
-            ),
             const SizedBox(height: 16),
             const Text('Проверка понимания:', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
-            Text(l.quizQuestion, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
+            Text(l.question, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
             const SizedBox(height: 8),
-            ...List.generate(l.quizOptions.length, (i) {
+            ...List.generate(l.options.length, (i) {
               return Card(
                 child: RadioListTile<int>(
                   value: i,
                   groupValue: _selectedOption,
-                  title: Text(l.quizOptions[i]),
+                  title: Text(l.options[i]),
                   onChanged: (v) => setState(() => _selectedOption = v),
                 ),
               );
@@ -240,7 +248,7 @@ class _LessonDetailScreenState extends State<_LessonDetailScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Text(
-                    isCorrect ? 'Верно! ${l.quizExplanation}' : 'Не совсем. ${l.quizExplanation}',
+                    isCorrect ? 'Верно! ${l.explanation}' : 'Не совсем. ${l.explanation}',
                     style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -261,3 +269,4 @@ class _LessonDetailScreenState extends State<_LessonDetailScreen> {
     );
   }
 }
+
