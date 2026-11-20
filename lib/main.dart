@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'screens/academy_screen.dart';
+import 'screens/news_screen.dart';
+import 'screens/portfolio_screen.dart';
+import 'screens/settings_screen.dart';
+import 'screens/simulator_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,11 +41,11 @@ class _MainShellState extends State<MainShell> {
   int _index = 0;
 
   final List<Widget> _screens = const [
-    _PlaceholderTab(title: 'Академия (200+ уроков)', icon: Icons.school),
-    _PlaceholderTab(title: 'Симулятор (200+ сценариев)', icon: Icons.show_chart),
-    _PlaceholderTab(title: 'Реальный портфель + ИИ', icon: Icons.account_balance_wallet),
-    _PlaceholderTab(title: 'Умные новости', icon: Icons.newspaper),
-    _PlaceholderTab(title: 'Настройки ИИ и данные', icon: Icons.settings),
+    AcademyScreen(),
+    SimulatorScreen(),
+    PortfolioScreen(),
+    NewsScreen(),
+    SettingsScreen(),
   ];
 
   @override
@@ -62,25 +67,3 @@ class _MainShellState extends State<MainShell> {
   }
 }
 
-class _PlaceholderTab extends StatelessWidget {
-  final String title;
-  final IconData icon;
-
-  const _PlaceholderTab({required this.title, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 64, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(height: 16),
-          Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          const Text('Каркас готов к наполнению'),
-        ],
-      ),
-    );
-  }
-}
