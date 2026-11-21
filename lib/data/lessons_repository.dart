@@ -31,6 +31,8 @@ import 'lessons_part29.dart';
 import 'lessons_part30.dart';
 import 'lessons_part31.dart';
 import 'lessons_part32.dart';
+import 'lessons_part33.dart';
+import 'lessons_part34.dart';
 
 class LessonsRepository {
   static List<Lesson> get allLessons => [
@@ -66,6 +68,8 @@ class LessonsRepository {
         ...lessonsPart30,
         ...lessonsPart31,
         ...lessonsPart32,
+        ...lessonsPart33,
+        ...lessonsPart34,
       ];
 
   static List<String> get modules {
